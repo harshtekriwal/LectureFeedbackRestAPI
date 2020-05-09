@@ -1,5 +1,7 @@
 package VerificationRestAPI.DetailsVerifiation;
 
+import java.util.ArrayList;
+
 public class LectureDetails {
 
 	String lecturename;
@@ -15,15 +17,11 @@ public class LectureDetails {
 	public void setTeachername(String teachername) {
 		this.teachername = teachername;
 	}
-	@Override
-	public String toString() {
-		return "LectureDetails [lecturename=" + lecturename + ", teachername=" + teachername + ", batch=" + batch
-				+ ", semester=" + semester + ", teacherid=" + teacherid + "]";
-	}
-	public String getBatch() {
+	
+	public ArrayList<String> getBatch() {
 		return batch;
 	}
-	public void setBatch(String batch) {
+	public void setBatch(ArrayList<String> batch) {
 		this.batch = batch;
 	}
 	public int getSemester() {
@@ -39,7 +37,7 @@ public class LectureDetails {
 		this.teacherid = teacherid;
 	}
 	String teachername;
-	String batch;
+	ArrayList<String> batch;
 	int semester;
 	int teacherid;
 }

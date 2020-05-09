@@ -32,18 +32,24 @@ public class PostLectureCode {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection con=DriverManager.getConnection( "jdbc:mysql://localhost:3306/lecturereview","root","rambo");
 	        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-	        PreparedStatement stmt=con.prepareStatement("insert into lecture (lecturename,teachername,batch,teacherid,datetime,semester) values(?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);  
+	        PreparedStatement stmt=con.prepareStatement("insert into lecture (lecturename,teachername,teacherid,datetime,semester) values(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);  
 			stmt.setString(1, lecture.getLecturename());
 			stmt.setString(2, lecture.getTeachername());
-			stmt.setString(3,lecture.getBatch());
-			stmt.setInt(4,lecture.getTeacherid());
-			stmt.setTimestamp(5, timestamp);
-			stmt.setInt(6,lecture.getSemester());
-			int i=stmt.executeUpdate(); 
+			stmt.setInt(3,lecture.getTeacherid());
+			stmt.setTimestamp(4, timestamp);
+			stmt.setInt(5,lecture.getSemester());
+			stmt.executeUpdate(); 
 			ResultSet rs;
 			rs = stmt.getGeneratedKeys();
             rs.next();
-			return rs.getInt(1);
+            int code=rs.getInt(1);
+            for(String b:lecture.getBatch()) {
+            stmt=con.prepareStatement("insert into lecture_batch (lectureid,batch) values (?,?)");
+            stmt.setInt(1,code);
+            stmt.setString(2,b);
+            stmt.executeUpdate();
+            }
+            return code;
 		}
 		catch(Exception E){
 			E.printStackTrace();

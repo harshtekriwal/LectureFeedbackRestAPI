@@ -15,5 +15,5 @@ public class StudentLoginResult {
 	public void setIsloginsuccessful(Boolean isloginsuccessful) {
 		this.isloginsuccessful = isloginsuccessful;
 	}
-
+	
 }

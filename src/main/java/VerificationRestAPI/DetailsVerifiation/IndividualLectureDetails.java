@@ -1,5 +1,7 @@
 package VerificationRestAPI.DetailsVerifiation;
 
+import java.util.ArrayList;
+
 public class IndividualLectureDetails {
 	private int teacherid;
 	private int semester;
@@ -38,6 +40,7 @@ public class IndividualLectureDetails {
 	public void setYear(String year) {
 		this.year = year;
 	}
+
 	public String getBatch() {
 		return batch;
 	}

@@ -47,15 +47,27 @@ public class PostLectureFeedback {
 			if(count>0) {
 				return FeedbackProblem.ALREADYRATED;
 			}
-			sql="select studentdetails.batch as b , studentdetails.semester as sem ,lecture.batch as bb,lecture.semester as semm from studentdetails,lecture where lecture.lectureid='"+feedback.getLectureid()+"' and studentdetails.Enrollment_no='"+feedback.getStudentroll()+"'";
+			sql="select studentdetails.batch as b , studentdetails.semester as sem ,lecture.semester as semm from studentdetails,lecture where lecture.lectureid='"+feedback.getLectureid()+"' and studentdetails.Enrollment_no='"+feedback.getStudentroll()+"'";
 			rs=st.executeQuery(sql);
 			rs.next();
 			String b1=rs.getString(1);
-			String b2=rs.getString(3);
 			int sem1=rs.getInt(2);
-			int sem2=rs.getInt(4);
-			if(!b1.equals(b2)||sem1!=sem2) {
-				System.out.println("garbar hai");
+			int sem2=rs.getInt(3);
+			if(sem1!=sem2) {
+				return FeedbackProblem.WRONGSEMBATCH;
+			}
+		
+			sql="select batch from lecture_batch where lectureid="+feedback.getLectureid();
+			rs=st.executeQuery(sql);
+			boolean checkbatch=false;
+			while(rs.next()) {
+				System.out.println(rs.getString(1));
+				if(rs.getString(1).equals(b1)) {
+					checkbatch=true;
+					break;
+				}
+			}
+			if(checkbatch==false) {
 				return FeedbackProblem.WRONGSEMBATCH;
 			}
 			Timestamp currenttime = new Timestamp(System.currentTimeMillis());
